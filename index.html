@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darvin Patel — PM Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1e1e1e;
+    --accent: #c8f044;
+    --accent2: #44f0c8;
+    --text: #e8e8e8;
+    --muted: #666;
+    --card: #141414;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,240,68,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 8vw, 110px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 17px;
+    color: #aaa;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .hero-desc strong { color: var(--text); font-weight: 500; }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover { background: #d4f55a; transform: translateY(-1px); }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+
+  .hero-stats {
+    position: absolute;
+    right: 48px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 0.9s;
+  }
+
+  .stat {
+    text-align: right;
+    border-right: 2px solid var(--accent);
+    padding-right: 16px;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Sections */
+  section {
+    padding: 100px 48px;
+    border-top: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 48px;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 16px;
+    color: #aaa;
+    line-height: 1.9;
+  }
+
+  .about-text p { margin-bottom: 20px; }
+  .about-text strong { color: var(--text); font-weight: 500; }
+
+  .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .skill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .skill-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  /* Case Studies */
+  .cases-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .case-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .case-card:hover { border-color: #333; }
+
+  .case-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+  }
+
+  .case-card:hover::before { transform: scaleY(1); }
+
+  .case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 24px;
+  }
+
+  .case-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.3s;
+  }
+
+  .case-card:hover .case-num { color: #252525; }
+
+  .case-meta {
+    flex: 1;
+  }
+
+  .case-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+
+  .case-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .case-problem {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .case-metrics {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metric-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Expanded case detail */
+  .case-detail {
+    display: none;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .case-detail.open { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .detail-block h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .detail-block p, .detail-block li {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.8;
+  }
+
+  .detail-block ul { padding-left: 16px; }
+  .detail-block li { margin-bottom: 6px; }
+
+  .expand-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 16px;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .expand-btn:hover { color: var(--accent); }
+
+  .expand-arrow {
+    display: inline-block;
+    transition: transform 0.3s;
+  }
+
+  .expand-btn.open .expand-arrow { transform: rotate(180deg); }
+
+  /* Domain */
+  .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .domain-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+  }
+
+  .domain-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .domain-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .domain-desc {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.7;
+  }
+
+  /* Contact */
+  .contact-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .contact-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .contact-left p {
+    font-size: 15px;
+    color: #888;
+    max-width: 420px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    transition: border-color 0.2s, background 0.2s;
+    min-width: 280px;
+  }
+
+  .contact-link:hover { border-color: var(--accent); background: #181818; }
+
+  .contact-link-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Divider line */
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 80px; }
+    .hero-stats { display: none; }
+    section { padding: 64px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .domain-grid { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .case-card { padding: 28px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Darvin Patel</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#domain">Domain</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-tag">Product Management Portfolio</div>
+  <h1 class="hero-name">Darvin<br><span>Patel</span></h1>
+  <p class="hero-desc">
+    I lead a <strong>10+ person M&A research team at Enverus</strong>, specializing in energy transition deal analysis — and I've spent the last year rebuilding how the team works by <strong>engineering AI workflows</strong> that are now used across the organization.
+  </p>
+  <div class="hero-cta">
+    <a href="#work" class="btn btn-primary">View Case Studies</a>
+    <a href="mailto:pdarvin381@gmail.com" class="btn btn-outline">Get In Touch</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">~80%</div>
+      <div class="stat-label">Avg time saved</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">AI workflows built</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4.8yr</div>
+      <div class="stat-label">Experience</div>
+    </div>
+  </div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label">About</div>
+  <div class="divider"></div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm a team lead in International Operations at Enverus, where I manage a 10+ person M&A research team focused on the energy transition sector across the US and Canada.</p>
+      <p>Over the last year, I've shifted my focus toward <strong>AI workflow design</strong> — identifying where manual processes are breaking my team, and engineering LLM-powered systems to replace them. The results have been significant: 75–85% time savings per task, cross-team adoption, and measurably more consistent outputs.</p>
+      <p>I'm now pivoting into <strong>Product Management</strong>, where I want to bring this same instinct — understanding user pain deeply, designing systems that scale, and shipping things people actually use — to building products full time.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">AI Workflow Engineering & Prompt Design</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">M&A Deal Analysis — Energy Transition</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Team Leadership (10+ analysts)</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Process Design & Operational Improvement</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Renewable Energy Asset Intelligence</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">SEC/SEDAR Filings & Regulatory Data</div></div>
+      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">LLM Systems — Multi-agent Architectures</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section id="work">
+  <div class="section-label">AI Workflow Case Studies</div>
+  <div class="divider"></div>
+  <h2 class="section-title reveal">Three workflows.<br>Built from real problems.</h2>
+
+  <div class="cases-grid">
+
+    <!-- Case 1 -->
+    <div class="case-card reveal" onclick="toggleCase('case1')">
+      <div class="case-header">
+        <div class="case-num">01</div>
+        <div class="case-meta">
+          <div class="case-tag">Asset Intelligence · Multi-agent System</div>
+          <div class="case-title">Renewable Asset Portfolio Research Automation</div>
+          <div class="case-problem">The team manually searched 6+ regulatory databases, company websites, and SEC filings to map IPP asset portfolios across the US and Canada — taking 3–4 hours per company, with inconsistent results and citation gaps that created risk in M&A due diligence.</div>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">75%</div><div class="metric-label">Time Saved</div></div>
+            <div class="metric"><div class="metric-val">30–60m</div><div class="metric-label">Per Company Now</div></div>
+            <div class="metric"><div class="metric-val">X-Team</div><div class="metric-label">Adoption</div></div>
+          </div>
+          <button class="expand-btn" id="btn-case1">Details <span class="expand-arrow">↓</span></button>
+        </div>
+      </div>
+      <div class="case-detail" id="case1">
+        <div class="detail-grid">
+          <div class="detail-block">
+            <h4>What I Built</h4>
+            <p>A multi-agent LLM research system assigning 7 specialist roles — Planner, Website Miner, Filings Analyst, Regulator Miner, Extractor, QA Auditor, Publisher — each with defined responsibilities and strict anti-hallucination guardrails.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Key Design Decisions</h4>
+            <ul>
+              <li>Source hierarchy enforcement (Company site → SEC → Regulator → Media)</li>
+              <li>11 defined QA flag types surfacing data quality issues automatically</li>
+              <li>Two research rounds before any field is marked incomplete</li>
+              <li>Every output cell hyperlinked to its primary source</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>PM Signal</h4>
+            <p>Decomposed a complex research process into roles, rules, and failure modes — the same thinking required to spec a product feature.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Scope</h4>
+            <p>US & Canada renewable assets: Solar, Wind, BESS, Hybrid, Hydro. Covers operational, under construction, development, planned, and retired assets across SPVs, JVs, and subsidiaries.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card reveal" onclick="toggleCase('case2')">
+      <div class="case-header">
+        <div class="case-num">02</div>
+        <div class="case-meta">
+          <div class="case-tag">Document Intelligence · Two-Pass Extraction</div>
+          <div class="case-title">M&A Transaction Extraction from Reports & Filings</div>
+          <div class="case-problem">Analysts used manual Ctrl+F keyword search across SEC filings, industry reports, and press releases to flag M&A deals. At 1–2 hours per document, with deals buried in footnotes and exhibits routinely missed, the process couldn't keep up with deal volume.</div>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">80%</div><div class="metric-label">Time Saved</div></div>
+            <div class="metric"><div class="metric-val">15–20m</div><div class="metric-label">Per Report Now</div></div>
+            <div class="metric"><div class="metric-val">Zero</div><div class="metric-label">Missed Footnotes</div></div>
+          </div>
+          <button class="expand-btn" id="btn-case2">Details <span class="expand-arrow">↓</span></button>
+        </div>
+      </div>
+      <div class="case-detail" id="case2">
+        <div class="detail-grid">
+          <div class="detail-block">
+            <h4>What I Built</h4>
+            <p>A structured extraction prompt that processes any document type — SEC/SEDAR filings, trade reports, press releases — and extracts every transaction with full context, sourcing, and analyst-grade commentary via a 6-step chain-of-thought reasoning sequence.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Key Design Decisions</h4>
+            <ul>
+              <li>80+ keyword primary list + second-pass expanded set for financing language missed by Ctrl+F</li>
+              <li>Historical transaction capture (completed, pending, ongoing)</li>
+              <li>Cross-check routine auditing high-yield sections after initial pass</li>
+              <li>Structured narrative output — ready for analyst use, no reformatting</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>PM Signal</h4>
+            <p>Two-pass architecture with a cross-check routine shows deliberate design against failure modes. Deep domain knowledge encoded into a reusable system — exactly what a domain PM does when speccing a feature.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Coverage</h4>
+            <p>Acquisitions, mergers, divestitures, JVs, investments, partnerships, LOI/MOU/LOA steps, options, earn-ins, royalties, licenses, tenders, financing agreements, hedge buyouts, and equity contributions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card reveal" onclick="toggleCase('case3')">
+      <div class="case-header">
+        <div class="case-num">03</div>
+        <div class="case-meta">
+          <div class="case-tag">News Intelligence · Daily Operations · MVP</div>
+          <div class="case-title">Real-Time M&A News Monitoring Engine</div>
+          <div class="case-problem">A junior analyst spent 2–3 hours every day manually scanning 5 press release platforms for energy sector M&A activity — creating a single point of failure, inconsistent coverage, and a perpetual drain on a skilled team member's time.</div>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">85%</div><div class="metric-label">Time Saved</div></div>
+            <div class="metric"><div class="metric-val">Daily</div><div class="metric-label">Team Dependency</div></div>
+            <div class="metric"><div class="metric-val">5</div><div class="metric-label">Platforms Covered</div></div>
+          </div>
+          <button class="expand-btn" id="btn-case3">Details <span class="expand-arrow">↓</span></button>
+        </div>
+      </div>
+      <div class="case-detail" id="case3">
+        <div class="detail-grid">
+          <div class="detail-block">
+            <h4>What I Built</h4>
+            <p>A real-time transaction intelligence prompt monitoring Business Wire, PR Newswire, GlobeNewswire, and Newswire.ca simultaneously, applying rigorous inclusion/exclusion logic and delivering a structured, deduplicated deal table daily.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Key Design Decisions</h4>
+            <ul>
+              <li>Two-layer signal detection: headline + body text, not headline alone</li>
+              <li>20+ transaction types included; operational noise explicitly excluded</li>
+              <li>Cross-platform, cross-language deduplication</li>
+              <li>Pagination enforcement — no pages skipped</li>
+              <li>Three-section output with full coverage transparency</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>PM Signal</h4>
+            <p>Identified a task consuming disproportionate team capacity and replaced it with a system — not just a faster way of doing the same thing. Eliminated a single point of failure the team didn't realize they had.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Impact Beyond Time</h4>
+            <p>Freed a junior analyst from a repetitive daily task entirely, redirecting that capacity toward higher-value analysis. Parameterized date range means one prompt covers daily, weekly, or retroactive research.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Domain -->
+<section id="domain">
+  <div class="section-label">Domain Expertise</div>
+  <div class="divider"></div>
+  <h2 class="section-title reveal">What I know deeply.</h2>
+  <div class="domain-grid reveal">
+    <div class="domain-card">
+      <div class="domain-icon">⚡</div>
+      <div class="domain-title">Energy Transition M&A</div>
+      <div class="domain-desc">4.8 years tracking renewable energy deals — solar, wind, BESS, hydro — across the US and Canada. Deep familiarity with how IPPs structure acquisitions, JVs, and asset sales.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon">🤖</div>
+      <div class="domain-title">AI Workflow Design</div>
+      <div class="domain-desc">Built production prompt systems with multi-agent architectures, anti-hallucination guardrails, and QA routines. Understand where LLMs fail and how to design around it.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon">📊</div>
+      <div class="domain-title">Regulatory & Financial Data</div>
+      <div class="domain-desc">Fluent in SEC/SEDAR filings, EIA databases, FERC dockets, ISO/RTO queues, and provincial Canadian regulators. Know where the data lives and how to extract it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <h2>Let's talk<br>about building<br><span style="color:var(--accent)">products.</span></h2>
+      <p>I'm actively exploring PM roles — particularly in energy, data, or AI product companies. If something here resonates, I'd love to connect.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:pdarvin381@gmail.com" class="contact-link">
+        <span class="contact-link-icon">EMAIL</span>
+        pdarvin381@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/darvinpatel99" target="_blank" class="contact-link">
+        <span class="contact-link-icon">LI</span>
+        linkedin.com/in/darvinpatel99
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Darvin Patel</p>
+  <p>M&A Research Lead → Product Manager</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Case toggle
+  function toggleCase(id) {
+    const detail = document.getElementById(id);
+    const btn = document.getElementById('btn-' + id);
+    const isOpen = detail.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.case-detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.expand-btn').forEach(b => b.classList.remove('open'));
+    // Open clicked if it was closed
+    if (!isOpen) {
+      detail.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+</script>
+</body>
+</html>
