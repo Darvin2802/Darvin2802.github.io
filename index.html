@@ -630,7 +630,7 @@
       <div class="stat-label">Avg time saved</div>
     </div>
     <div class="stat">
-      <div class="stat-num">3</div>
+      <div class="stat-num">4</div>
       <div class="stat-label">AI workflows built</div>
     </div>
     <div class="stat">
@@ -666,7 +666,7 @@
 <section id="work">
   <div class="section-label">AI Workflow Case Studies</div>
   <div class="divider"></div>
-  <h2 class="section-title reveal">Three workflows.<br>Built from real problems.</h2>
+  <h2 class="section-title reveal">Four workflows.<br>Built from real problems.</h2>
 
   <div class="cases-grid">
 
@@ -796,6 +796,142 @@
             <h4>Impact Beyond Time</h4>
             <p>Freed a junior analyst from a repetitive daily task entirely, redirecting that capacity toward higher-value analysis. Parameterized date range means one prompt covers daily, weekly, or retroactive research.</p>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 4 -->
+    <div class="case-card reveal" onclick="toggleCase('case4')">
+      <div class="case-header">
+        <div class="case-num">04</div>
+        <div class="case-meta">
+          <div class="case-tag">Expert System · Deal Intelligence · GitHub Open Source</div>
+          <div class="case-title">M&A Deal Memo Intelligence System</div>
+          <div class="case-problem">Every significant M&A or asset transaction requires a source-backed deal memo. Analysts wrote these from scratch every time — 2–4 hours per deal — with output quality varying by seniority, facts frequently unsourced, and material documents like merger agreements and investor presentations routinely missed. In M&A intelligence, an unsourced fact isn't a minor gap — it's a credibility problem.</div>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">60%</div><div class="metric-label">Time Saved</div></div>
+            <div class="metric"><div class="metric-val">60–90m</div><div class="metric-label">Per Memo Now</div></div>
+            <div class="metric"><div class="metric-val">GitHub</div><div class="metric-label">Public Repo</div></div>
+          </div>
+          <button class="expand-btn" id="btn-case4">Details <span class="expand-arrow">↓</span></button>
+        </div>
+      </div>
+      <div class="case-detail" id="case4">
+        <div class="detail-grid">
+          <div class="detail-block">
+            <h4>What I Built</h4>
+            <p>A 10-step mandatory research workflow that encodes senior analyst judgment into a reusable LLM system — covering transaction identification, document retrieval, ownership mapping, deal mechanics extraction, advisor identification, post-announcement monitoring, and a complete source register. Operates on a deal headline and produces a fixed 12-section professional memo every time.</p>
+          </div>
+          <div class="detail-block">
+            <h4>Key Design Decisions</h4>
+            <ul>
+              <li>Controlled vocabulary of 12 transaction types for consistent classification</li>
+              <li>Mandatory ±7 day presentation search window around announcement date — catches investor decks manual research misses</li>
+              <li>Document priority hierarchy: press release → exchange filing → SEC → presentations → merger agreement → media</li>
+              <li>15 anti-hallucination hard rules — prohibits "likely," "appears to be," "may have" unless quoted from source</li>
+              <li>Ownership chain mapping: Entity → immediate parent → intermediate parent(s) → ultimate parent, stops explicitly where confirmation ends</li>
+              <li>Legal term simplification — complex clauses quoted then explained in plain business English</li>
+              <li>Full source register on every output: title, type, party, date, URL, access status, source quality</li>
+              <li>Failsafe rule — stops and asks for clarification rather than proceeding with a potentially wrong deal</li>
+            </ul>
+          </div>
+          <div class="detail-block">
+            <h4>What Makes This Different</h4>
+            <p>The previous three workflows automate repetitive high-volume tasks. This one encodes expert judgment. The 10-step sequence, document hierarchy, ownership rules, anti-hallucination guardrails, and failsafe rule come from knowing what experienced M&A analysts check, in what order, and why. Encoding that into a reusable system is a fundamentally different kind of work — it raises the quality floor so a junior analyst using this system produces a more complete, better-sourced memo than a senior analyst working manually.</p>
+          </div>
+          <div class="detail-block">
+            <h4>PM Signal & GitHub</h4>
+            <p>The primary design goal wasn't speed — it was accuracy and consistency. This is published on GitHub with versioning in mind, showing thinking beyond "tool I built" toward "system others can use and improve." Covers global M&A and asset transactions across energy transition sectors: electricity generation, renewables, mining, EV, battery value chain, and related industrial themes.</p>
+            <p style="margin-top:12px;"><a href="https://github.com/Darvin2802/ma-deal-memo-workflow" target="_blank" style="color:var(--accent);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.08em;">→ github.com/Darvin2802/ma-deal-memo-workflow</a></p>
+          </div>
+        </div>
+
+        <!-- Full comprehensive breakdown -->
+        <div style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border);">
+          <h4 style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">The 10-Step Mandatory Workflow</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 1</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Identify & Verify Transaction</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Parse input headline. Verify from primary sources. Classify using controlled 12-type vocabulary. Confirm all parties, dates, stake, and geography before proceeding.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 2</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Full Document Retrieval</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Search 8 source categories: buyer, seller, target, exchange/regulator, advisor, media, archived pages, local-language sources. ±7 day presentation window. Priority hierarchy enforced.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 3</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Transaction Snapshot</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Compact verified summary: deal type, announcement/signing/closing dates, status, buyers, sellers, target, stake, geography, deal value, consideration mix.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 4</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Ownership Structure Mapping</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Trace buyer and seller ownership chains as of announcement date. Entity → immediate parent → intermediate → ultimate parent. Reports only confirmed links. States explicitly where confirmation stops.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 5</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Transaction Details Extraction</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Deal value breakdown: cash, equity, debt assumed, working capital adjustment, earnout, EV, equity value. Plus conditions precedent, regulatory approvals, financing, termination rights, break fees.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 6</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Asset / Company Detail</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Separated into A) confirmed from transaction documents and B) supplemental from other sources. Covers business description, capacity, contracts, financials, historical ownership, strategic rationale.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 7</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Advisor Identification</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Financial, legal, fairness opinion, lender/arranger, PR, technical, proxy, accounting advisors. Organized by side. Searches advisor press releases, law firm matter pages, tombstones if not in primary docs.</div>
+            </div>
+            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEPS 8–10</div>
+              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Post-Announcement + Source Register</div>
+              <div style="font-size:12px;color:#777;line-height:1.6;">Monitors closing, amendment, or termination. Consolidated "Not Found" section for full transparency. Complete source register: every source with title, type, party, URL, access status, quality rating.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Impact table -->
+        <div style="margin-top:32px;">
+          <h4 style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Impact</h4>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead>
+              <tr style="border-bottom:1px solid var(--border);">
+                <th style="text-align:left;padding:10px 0;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">METRIC</th>
+                <th style="text-align:left;padding:10px 16px;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">BEFORE</th>
+                <th style="text-align:left;padding:10px 0;color:var(--accent);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">AFTER</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:10px 0;color:#aaa;">Time per deal memo</td>
+                <td style="padding:10px 16px;color:#666;">2–4 hours</td>
+                <td style="padding:10px 0;color:var(--accent);">60–90 minutes</td>
+              </tr>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:10px 0;color:#aaa;">Output consistency</td>
+                <td style="padding:10px 16px;color:#666;">Varied by analyst seniority</td>
+                <td style="padding:10px 0;color:var(--accent);">Fixed 12-section structure every time</td>
+              </tr>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:10px 0;color:#aaa;">Source discipline</td>
+                <td style="padding:10px 16px;color:#666;">Informal, mixed primary/secondary</td>
+                <td style="padding:10px 0;color:var(--accent);">Mandatory hierarchy, full register</td>
+              </tr>
+              <tr style="border-bottom:1px solid #111;">
+                <td style="padding:10px 0;color:#aaa;">Document coverage</td>
+                <td style="padding:10px 16px;color:#666;">Dependent on analyst knowledge</td>
+                <td style="padding:10px 0;color:var(--accent);">Systematic 8-category search</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;color:#aaa;">Junior analyst quality</td>
+                <td style="padding:10px 16px;color:#666;">Significantly below senior</td>
+                <td style="padding:10px 0;color:var(--accent);">Standardized to senior standard</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
