@@ -1,1020 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Darvin Patel — PM Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Darvin Patel — AI Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --border: #1e1e1e;
-    --accent: #c8f044;
-    --accent2: #44f0c8;
-    --text: #e8e8e8;
-    --muted: #666;
-    --card: #141414;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* Grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* Nav */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 20px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* Hero */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 120px 48px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: -200px;
-    right: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(200,240,68,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.2s;
-  }
-
-  .hero-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(56px, 8vw, 110px);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.35s;
-  }
-
-  .hero-name span {
-    color: var(--accent);
-    font-style: italic;
-  }
-
-  .hero-desc {
-    max-width: 560px;
-    font-size: 17px;
-    color: #aaa;
-    line-height: 1.8;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.5s;
-  }
-
-  .hero-desc strong { color: var(--text); font-weight: 500; }
-
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.65s;
-  }
-
-  .btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 14px 28px;
-    border-radius: 2px;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-block;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #0a0a0a;
-    font-weight: 500;
-  }
-
-  .btn-primary:hover { background: #d4f55a; transform: translateY(-1px); }
-
-  .btn-outline {
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .btn-outline:hover { border-color: var(--muted); color: var(--text); }
-
-  .hero-stats {
-    position: absolute;
-    right: 48px;
-    bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards 0.9s;
-  }
-
-  .stat {
-    text-align: right;
-    border-right: 2px solid var(--accent);
-    padding-right: 16px;
-  }
-
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  /* Sections */
-  section {
-    padding: 100px 48px;
-    border-top: 1px solid var(--border);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 48px;
-  }
-
-  /* About */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .about-text {
-    font-size: 16px;
-    color: #aaa;
-    line-height: 1.9;
-  }
-
-  .about-text p { margin-bottom: 20px; }
-  .about-text strong { color: var(--text); font-weight: 500; }
-
-  .skills-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .skill-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-  }
-
-  .skill-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .skill-name {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    color: var(--text);
-  }
-
-  /* Case Studies */
-  .cases-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .case-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 40px 44px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s;
-    cursor: pointer;
-  }
-
-  .case-card:hover { border-color: #333; }
-
-  .case-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--accent);
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-    transform-origin: bottom;
-  }
-
-  .case-card:hover::before { transform: scaleY(1); }
-
-  .case-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    gap: 24px;
-  }
-
-  .case-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 64px;
-    font-weight: 900;
-    color: var(--border);
-    line-height: 1;
-    flex-shrink: 0;
-    transition: color 0.3s;
-  }
-
-  .case-card:hover .case-num { color: #252525; }
-
-  .case-meta {
-    flex: 1;
-  }
-
-  .case-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 10px;
-  }
-
-  .case-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .case-problem {
-    font-size: 14px;
-    color: #888;
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
-
-  .case-metrics {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-
-  .metric {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .metric-val {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .metric-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* Expanded case detail */
-  .case-detail {
-    display: none;
-    margin-top: 32px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-  }
-
-  .case-detail.open { display: block; }
-
-  .detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-  }
-
-  .detail-block h4 {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  .detail-block p, .detail-block li {
-    font-size: 14px;
-    color: #888;
-    line-height: 1.8;
-  }
-
-  .detail-block ul { padding-left: 16px; }
-  .detail-block li { margin-bottom: 6px; }
-
-  .expand-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-top: 16px;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .expand-btn:hover { color: var(--accent); }
-
-  .expand-arrow {
-    display: inline-block;
-    transition: transform 0.3s;
-  }
-
-  .expand-btn.open .expand-arrow { transform: rotate(180deg); }
-
-  /* Domain */
-  .domain-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .domain-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 32px 28px;
-  }
-
-  .domain-icon {
-    font-size: 28px;
-    margin-bottom: 16px;
-  }
-
-  .domain-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .domain-desc {
-    font-size: 13px;
-    color: #777;
-    line-height: 1.7;
-  }
-
-  /* Contact */
-  .contact-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-
-  .contact-left h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
-
-  .contact-left p {
-    font-size: 15px;
-    color: #888;
-    max-width: 420px;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 22px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 14px;
-    transition: border-color 0.2s, background 0.2s;
-    min-width: 280px;
-  }
-
-  .contact-link:hover { border-color: var(--accent); background: #181818; }
-
-  .contact-link-icon {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-
-  /* Footer */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Divider line */
-  .divider {
-    width: 48px;
-    height: 2px;
-    background: var(--accent);
-    margin-bottom: 32px;
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    .hero { padding: 100px 24px 80px; }
-    .hero-stats { display: none; }
-    section { padding: 64px 24px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .domain-grid { grid-template-columns: 1fr; }
-    .detail-grid { grid-template-columns: 1fr; }
-    .case-card { padding: 28px 24px; }
-    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
-  }
-</style>
-</head>
-<body>
-
+[data-theme="dark"]{--bg:#08080f;--bg2:#0d0d1a;--bg3:#111120;--bg4:#161628;--border:#1a1a2e;--border2:#252540;--text:#eaeaf8;--text2:#8080b0;--text3:#404068;--cs:0 2px 20px rgba(0,0,0,.3);--noise:.4;--gl:rgba(26,26,46,.5);--hg1:rgba(124,111,255,.07);--hg2:rgba(0,201,167,.05);--tab:#1a1a2e;--chip:rgba(255,255,255,.04);--sh:rgba(0,0,0,.4)}
+[data-theme="light"]{--bg:#f4f4f0;--bg2:#fff;--bg3:#f0f0ec;--bg4:#e8e8e4;--border:#e2e2da;--border2:#d0d0c8;--text:#1a1a2a;--text2:#5a5a7a;--text3:#9898b0;--cs:0 2px 16px rgba(0,0,0,.06);--noise:.12;--gl:rgba(180,180,200,.25);--hg1:rgba(124,111,255,.05);--hg2:rgba(0,201,167,.04);--tab:#fff;--chip:rgba(0,0,0,.04);--sh:rgba(0,0,0,.08)}
+:root{--teal:#00c9a7;--blue:#38bdf8;--purple:#7c6fff;--violet:#a78bfa;--amber:#f7c948;--green:#4ade80}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:var(--noise)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:.875rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .3s}
+[data-theme="light"] nav{background:rgba(244,244,240,.92)}
+.nl{font-family:"DM Serif Display",serif;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nr{display:flex;align-items:center;gap:2rem}
+.nls{display:flex;gap:2rem;list-style:none}
+.nls a{font-size:13px;color:var(--text2);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;font-weight:500;transition:color .2s}
+.nls a:hover{color:var(--text)}
+.tt{width:44px;height:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:20px;cursor:pointer;position:relative;transition:all .3s;flex-shrink:0}
+.tt::before{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text2);transition:transform .3s,background .3s}
+[data-theme="light"] .tt::before{transform:translateX(20px);background:var(--purple)}
+.ti{position:absolute;font-size:9px;top:50%;transform:translateY(-50%);transition:opacity .3s;pointer-events:none}
+.ti-m{right:6px;opacity:1}.ti-s{left:6px;opacity:0}
+[data-theme="light"] .ti-m{opacity:0}[data-theme="light"] .ti-s{opacity:1}
+.nt{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}
+@media(max-width:640px){.nls{display:none}.nls.open{display:flex;flex-direction:column;position:fixed;top:57px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:1.5rem 2rem;gap:1.25rem;z-index:199}.nt{display:block}.nr{gap:1rem}}
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hbg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,var(--hg1) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,var(--hg2) 0%,transparent 60%)}
+.hgr{position:absolute;inset:0;background-image:linear-gradient(var(--gl) 1px,transparent 1px),linear-gradient(90deg,var(--gl) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hi{position:relative;max-width:900px;margin:0 auto;width:100%}
+.he{display:inline-flex;align-items:center;gap:8px;font-family:"DM Mono",monospace;font-size:12px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;padding:6px 14px;border:1px solid rgba(0,201,167,.25);border-radius:20px;background:rgba(0,201,167,.06)}
+.he::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-family:"DM Serif Display",serif;font-size:clamp(3rem,8vw,6rem);line-height:1;letter-spacing:-.03em;color:var(--text);margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:var(--purple)}
+.hd{font-size:clamp(15px,2vw,18px);color:var(--text2);max-width:580px;line-height:1.75;margin-bottom:2.5rem}
+.hd strong{color:var(--text);font-weight:500}
+.ha{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4rem}
+.bp{padding:12px 24px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;font-family:"DM Sans",sans-serif;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.bp:hover{background:#6b5fff;transform:translateY(-1px);box-shadow:0 8px 30px rgba(124,111,255,.3)}
+.bs{padding:12px 24px;background:transparent;color:var(--text);border:1px solid var(--border2);border-radius:8px;font-size:14px;font-weight:500;font-family:"DM Sans",sans-serif;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.bs:hover{border-color:var(--text2);background:var(--chip)}
+.hs{display:flex;gap:3rem;flex-wrap:wrap}
+.sn{font-family:"DM Serif Display",serif;font-size:2.5rem;color:var(--text);line-height:1;margin-bottom:4px}
+.sl{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+section{padding:6rem 2rem;max-width:960px;margin:0 auto}
+.ey{font-family:"DM Mono",monospace;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.5rem}
+.st{font-family:"DM Serif Display",serif;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem;color:var(--text)}
+.ss{font-size:16px;color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:3rem}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:640px){.ag{grid-template-columns:1fr}}
+.at p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1.25rem}
+.at p strong{color:var(--text);font-weight:500}
+.ac{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+.chip{font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);background:var(--chip);font-weight:400}
+.as{display:flex;flex-direction:column;gap:12px}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;box-shadow:var(--cs)}
+.scl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;font-family:"DM Mono",monospace}
+.scv{font-size:14px;color:var(--text);font-weight:500;line-height:1.5}
+.stabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:6px;width:fit-content}
+.stab{font-size:13px;font-weight:500;padding:8px 18px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:"DM Sans",sans-serif;transition:all .2s;white-space:nowrap}
+.stab:hover{color:var(--text);background:var(--chip)}
+.stab.on{background:var(--tab);color:var(--text);box-shadow:0 1px 6px var(--sh)}
+.sp{display:none}.sp.on{display:block;animation:fs .25s ease}
+@keyframes fs{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.skc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;box-shadow:var(--cs);transition:border-color .2s,transform .2s}
+.skc:hover{border-color:var(--border2);transform:translateY(-2px)}
+.ski{font-size:22px;margin-bottom:.6rem}
+.skt{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.skd{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:.75rem}
+.sktags{display:flex;flex-wrap:wrap;gap:5px}
+.sktag{font-size:11px;padding:3px 9px;border-radius:6px;font-family:"DM Mono",monospace;background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.sfw{font-size:10px;font-family:"DM Mono",monospace;color:var(--teal);text-transform:uppercase;letter-spacing:.07em;margin-top:8px;display:flex;align-items:center;gap:5px}
+.sfw::before{content:"⚡";font-size:9px}
+.pip{display:flex;align-items:center;margin-bottom:3rem;overflow-x:auto;padding-bottom:8px}
+.pn{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.pd{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"DM Mono",monospace;font-size:12px;font-weight:500;border:1px solid}
+.pl{font-size:10px;color:var(--text3);text-align:center;max-width:80px;line-height:1.3;text-transform:uppercase;letter-spacing:.05em}
+.pa{font-size:16px;color:var(--text3);padding:0 4px;flex-shrink:0;margin-bottom:22px}
+.css2{display:flex;flex-direction:column;gap:16px}
+.cc{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--cs);transition:border-color .2s}
+.cc:hover{border-color:var(--border2)}
+.ch{padding:1.75rem 2rem;cursor:pointer;display:flex;gap:1.5rem;align-items:flex-start}
+.cn{font-family:"DM Mono",monospace;font-size:11px;font-weight:500;padding:4px 10px;border-radius:6px;flex-shrink:0;margin-top:3px;border:1px solid}
+.chc{flex:1;min-width:0}
+.ctype{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-family:"DM Mono",monospace;margin-bottom:4px}
+.ctit{font-family:"DM Serif Display",serif;font-size:clamp(17px,3vw,22px);line-height:1.2;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
+.cprob{font-size:14px;color:var(--text2);line-height:1.65;max-width:640px}
+.cmet{display:flex;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+.cmn{font-family:"DM Serif Display",serif;font-size:1.75rem;line-height:1;margin-bottom:2px}
+.cml{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+.ctog{font-size:20px;color:var(--text3);transition:transform .25s;flex-shrink:0;margin-top:4px;user-select:none}
+.ctog.open{transform:rotate(180deg)}
+.cb{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.cb.open{max-height:3000px}
+.ci{border-top:1px solid var(--border);padding:2rem}
+.csh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);font-family:"DM Mono",monospace;margin-bottom:.75rem;margin-top:1.75rem}
+.csh:first-child{margin-top:0}
+.cbt{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:.75rem}
+.cbt strong{color:var(--text);font-weight:500}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.5rem}
+@media(max-width:600px){.dg{grid-template-columns:1fr}}
+.di{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem}
+.dlabel{font-size:10px;font-family:"DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.dtit{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
+.dw{font-size:12px;color:var(--text2);line-height:1.55}
+.tfs{display:flex;flex-direction:column;gap:10px}
+.tfr{display:flex;gap:12px;align-items:flex-start}
+.tfb{width:3px;min-height:40px;border-radius:2px;flex-shrink:0;margin-top:4px;align-self:stretch}
+.tft{font-size:13px;color:var(--text2);line-height:1.65}
+.tft strong{color:var(--text);font-weight:500}
+.ot{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:.5rem}
+.ot th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);border-bottom:1px solid var(--border);font-family:"DM Mono",monospace}
+.ot td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.5}
+.ot tr:last-child td{border-bottom:none}
+.ot td:first-child{font-weight:500;color:var(--text)}
+.lb{border-left:3px solid var(--green);background:rgba(74,222,128,.05);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin-top:1.25rem}
+.lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--green);font-family:"DM Mono",monospace;margin-bottom:.4rem}
+.lt{font-size:14px;color:rgba(74,222,128,.8);line-height:1.7;font-style:italic}
+[data-theme="light"] .lt{color:#166534}
+.lt strong{color:var(--green);font-style:normal}
+[data-theme="light"] .lt strong{color:#15803d}
+.nb{border-left:3px solid var(--amber);background:rgba(247,201,72,.04);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin-top:1rem}
+.nbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--amber);font-family:"DM Mono",monospace;margin-bottom:.5rem}
+.nbi{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:6px;padding-left:14px;position:relative}
+.nbi::before{content:"→";position:absolute;left:0;color:var(--amber);font-size:11px}
+.nbi strong{color:var(--text);font-weight:500}
+.pcard{background:var(--bg2);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--cs);display:grid;grid-template-columns:1fr auto;position:relative}
+@media(max-width:640px){.pcard{grid-template-columns:1fr}}
+.pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--teal))}
+.pm{padding:2rem}
+.pj{display:inline-flex;align-items:center;gap:8px;font-family:"DM Mono",monospace;font-size:11px;color:var(--purple);letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:20px;background:rgba(124,111,255,.08);border:1px solid rgba(124,111,255,.2);margin-bottom:1rem}
+.ptit{font-family:"DM Serif Display",serif;font-size:clamp(16px,2.5vw,22px);line-height:1.3;color:var(--text);margin-bottom:.5rem;letter-spacing:-.01em}
+.pmeta{font-size:13px;color:var(--text2);margin-bottom:1.25rem;line-height:1.6}
+.pmeta strong{color:var(--text);font-weight:500}
+.pf{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.pfr{display:flex;gap:12px;align-items:flex-start}
+.pfd{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:6px}
+.pft{font-size:13px;color:var(--text2);line-height:1.6}
+.pft strong{color:var(--text);font-weight:500}
+.pstats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.5rem}
+.psn{font-family:"DM Serif Display",serif;font-size:2rem;color:var(--purple);line-height:1;margin-bottom:3px}
+.psl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:500}
+.psb{background:var(--bg3);border-left:1px solid var(--border);padding:2rem 1.75rem;display:flex;flex-direction:column;gap:1.25rem;min-width:220px}
+@media(max-width:640px){.psb{border-left:none;border-top:1px solid var(--border)}}
+.psig{background:rgba(124,111,255,.06);border:1px solid rgba(124,111,255,.2);border-radius:10px;padding:1rem}
+.psigl{font-size:10px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;font-family:"DM Mono",monospace;margin-bottom:.4rem}
+.psigt{font-size:12px;color:var(--text2);line-height:1.6}
+.psigt strong{color:var(--text);font-weight:500}
+.pl2{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--purple);text-decoration:none;padding:10px 16px;border:1px solid rgba(124,111,255,.3);border-radius:8px;background:rgba(124,111,255,.06);transition:all .2s;font-weight:500}
+.pl2:hover{background:rgba(124,111,255,.12);transform:translateY(-1px)}
+.clfg{display:flex;flex-direction:column;gap:6px}
+.clfr{display:flex;align-items:center;gap:8px}
+.clfn{font-size:11px;font-family:"DM Mono",monospace;color:var(--text2);width:100px;flex-shrink:0}
+.clfbw{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.clfb{height:100%;border-radius:3px;transition:width 1s ease;width:0}
+.clfv{font-size:11px;font-family:"DM Mono",monospace;color:var(--text3);width:36px;text-align:right;flex-shrink:0}
+.dg3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:640px){.dg3{grid-template-columns:1fr}}
+.dcard{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:border-color .2s,transform .2s;box-shadow:var(--cs)}
+.dcard:hover{border-color:var(--border2);transform:translateY(-2px)}
+.dicon{font-size:28px;margin-bottom:1rem}
+.dtitle{font-family:"DM Serif Display",serif;font-size:18px;color:var(--text);margin-bottom:.5rem;letter-spacing:-.01em}
+.ddesc{font-size:13px;color:var(--text2);line-height:1.7}
+.ctwrap{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden;box-shadow:var(--cs)}
+.ctwrap::before{content:"";position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,var(--hg1),transparent 70%);pointer-events:none}
+@media(max-width:640px){.ctwrap{grid-template-columns:1fr;padding:2rem}}
+.cttit{font-family:"DM Serif Display",serif;font-size:clamp(1.75rem,4vw,2.5rem);letter-spacing:-.02em;line-height:1.15;margin-bottom:1rem}
+.cttit em{font-style:italic;color:var(--purple)}
+.ctdesc{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
+.ctls{display:flex;flex-direction:column;gap:12px}
+.ctl{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all .2s}
+.ctl:hover{border-color:var(--border2);transform:translateX(4px)}
+.ctli{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ctlt{flex:1}
+.ctll{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;font-family:"DM Mono",monospace}
+.ctlv{font-size:14px;color:var(--text);font-weight:500}
+.ctla{font-size:16px;color:var(--text3)}
+footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:12px;color:var(--text3);font-family:"DM Mono",monospace}
+.fi{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fi.v{opacity:1;transform:translateY(0)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style></head><body>
 <nav>
-  <div class="nav-logo">Darvin Patel</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#domain">Domain</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-tag">Product Management Portfolio</div>
-  <h1 class="hero-name">Darvin<br><span>Patel</span></h1>
-  <p class="hero-desc">
-    I lead a <strong>10+ person M&A research team at Enverus</strong>, specializing in energy transition deal analysis — and I've spent the last year rebuilding how the team works by <strong>engineering AI workflows</strong> that are now used across the organization.
-  </p>
-  <div class="hero-cta">
-    <a href="#work" class="btn btn-primary">View Case Studies</a>
-    <a href="mailto:pdarvin381@gmail.com" class="btn btn-outline">Get In Touch</a>
+  <a href="#" class="nl">Darvin Patel</a>
+  <div class="nr">
+    <ul class="nls" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#domain">Domain</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="tt" id="themeToggle" aria-label="Toggle theme">
+      <span class="ti ti-m">🌙</span>
+      <span class="ti ti-s">☀</span>
+    </button>
+    <button class="nt" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
   </div>
-
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">~80%</div>
-      <div class="stat-label">Avg time saved</div>
+</nav>
+<div class="hero">
+  <div class="hbg"></div><div class="hgr"></div>
+  <div class="hi">
+    <div class="he">Open to PM &amp; AI PM roles</div>
+    <h1>AI Product<br><em>Builder.</em></h1>
+    <p class="hd">5 years at <strong>Enverus ($550M+ ARR)</strong> leading a 10-person M&amp;A research team — and the last two rebuilding how it works by engineering <strong>production LLM systems</strong> used across the organisation. Co-author of a <strong>peer-reviewed ML paper</strong> (cited 6×). Now making the transition into full product ownership.</p>
+    <div class="ha">
+      <a href="#work" class="bp">View Case Studies →</a>
+      <a href="https://github.com/Darvin2802/ma-deal-memo-workflow" target="_blank" class="bs">GitHub ↗</a>
+      <a href="mailto:pdarvin381@gmail.com" class="bs">Get in touch</a>
     </div>
-    <div class="stat">
-      <div class="stat-num">4</div>
-      <div class="stat-label">AI workflows built</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">4.8yr</div>
-      <div class="stat-label">Experience</div>
+    <div class="hs">
+      <div><div class="sn">~80%</div><div class="sl">Avg time saved</div></div>
+      <div><div class="sn">4</div><div class="sl">Production workflows</div></div>
+      <div><div class="sn">4.8yr</div><div class="sl">Enterprise B2B</div></div>
+      <div><div class="sn">6×</div><div class="sl">Cited ML paper</div></div>
     </div>
   </div>
 </div>
-
-<!-- About -->
-<section id="about">
-  <div class="section-label">About</div>
-  <div class="divider"></div>
-  <div class="about-grid reveal">
-    <div class="about-text">
-      <p>I'm a team lead in International Operations at Enverus, where I manage a 10+ person M&A research team focused on the energy transition sector across the US and Canada.</p>
-      <p>Over the last year, I've shifted my focus toward <strong>AI workflow design</strong> — identifying where manual processes are breaking my team, and engineering LLM-powered systems to replace them. The results have been significant: 75–85% time savings per task, cross-team adoption, and measurably more consistent outputs.</p>
-      <p>I'm now pivoting into <strong>Product Management</strong>, where I want to bring this same instinct — understanding user pain deeply, designing systems that scale, and shipping things people actually use — to building products full time.</p>
+<section id="about" class="fi">
+  <div class="ey">About</div>
+  <h2 class="st">Operator turned<br>product builder.</h2>
+  <div class="ag">
+    <div class="at">
+      <p>I'm a Product Operations Lead at <strong>Enverus</strong>, managing a 10-person M&amp;A research team focused on energy transition deals across the US and Canada. Over the last two years, I've shifted focus toward <strong>AI product design</strong> — identifying where manual processes break, and building LLM systems to replace them.</p>
+      <p>The results: 60–85% time savings per task, cross-team adoption, and measurably more consistent outputs. What I'm most proud of is that these systems <strong>encode expert judgment</strong>, not just expert speed.</p>
+      <p>I'm now making the move into full Product Management — <strong>understand user pain deeply, design systems that scale, ship things people actually use</strong>.</p>
+      <p>Co-author of a <strong>peer-reviewed ML paper</strong> (Taylor &amp; Francis, cited 6×). Former product strategy consultant for an AI content moderation startup in Ireland.</p>
+      <div class="ac">
+        <span class="chip">LLM Workflow Design</span><span class="chip">Prompt Engineering</span><span class="chip">RAG Architecture</span><span class="chip">AI Evaluation</span><span class="chip">PRD &amp; Roadmaps</span><span class="chip">User Research</span><span class="chip">Energy Transition M&amp;A</span><span class="chip">n8n · Lovable · LangChain</span>
+      </div>
     </div>
-    <div class="skills-grid">
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">AI Workflow Engineering & Prompt Design</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">M&A Deal Analysis — Energy Transition</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Team Leadership (10+ analysts)</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Process Design & Operational Improvement</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">Renewable Energy Asset Intelligence</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">SEC/SEDAR Filings & Regulatory Data</div></div>
-      <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">LLM Systems — Multi-agent Architectures</div></div>
+    <div class="as">
+      <div class="sc"><div class="scl">Current role</div><div class="scv">Product Ops Lead, Enverus<br><span style="color:var(--text2);font-weight:400;font-size:13px">Nov 2021 – Present · Bangalore</span></div></div>
+      <div class="sc"><div class="scl">Education</div><div class="scv">B.Tech, MIT WPU Pune<br><span style="color:var(--text2);font-weight:400;font-size:13px">CGPA 9.23/10 · 2017–2021</span></div></div>
+      <div class="sc"><div class="scl">Publication</div><div class="scv" style="font-size:13px">ML Classification for EOR Screening<br><span style="color:var(--text2);font-weight:400">Taylor &amp; Francis · Cited 6× · 240+ views</span></div></div>
+      <div class="sc"><div class="scl">Targeting</div><div class="scv" style="font-size:13px">PM · AI PM · Product Ops Manager<br><span style="color:var(--teal);font-weight:400">B2B SaaS · AI · Energy · Data</span></div></div>
     </div>
   </div>
 </section>
-
-<!-- Case Studies -->
-<section id="work">
-  <div class="section-label">AI Workflow Case Studies</div>
-  <div class="divider"></div>
-  <h2 class="section-title reveal">Four workflows.<br>Built from real problems.</h2>
-
-  <div class="cases-grid">
-
-    <!-- Case 1 -->
-    <div class="case-card reveal" onclick="toggleCase('case1')">
-      <div class="case-header">
-        <div class="case-num">01</div>
-        <div class="case-meta">
-          <div class="case-tag">Asset Intelligence · Multi-agent System</div>
-          <div class="case-title">Renewable Asset Portfolio Research Automation</div>
-          <div class="case-problem">The team manually searched 6+ regulatory databases, company websites, and SEC filings to map IPP asset portfolios across the US and Canada — taking 3–4 hours per company, with inconsistent results and citation gaps that created risk in M&A due diligence.</div>
-          <div class="case-metrics">
-            <div class="metric"><div class="metric-val">75%</div><div class="metric-label">Time Saved</div></div>
-            <div class="metric"><div class="metric-val">30–60m</div><div class="metric-label">Per Company Now</div></div>
-            <div class="metric"><div class="metric-val">X-Team</div><div class="metric-label">Adoption</div></div>
-          </div>
-          <button class="expand-btn" id="btn-case1">Details <span class="expand-arrow">↓</span></button>
-        </div>
-      </div>
-      <div class="case-detail" id="case1">
-        <div class="detail-grid">
-          <div class="detail-block">
-            <h4>What I Built</h4>
-            <p>A multi-agent LLM research system assigning 7 specialist roles — Planner, Website Miner, Filings Analyst, Regulator Miner, Extractor, QA Auditor, Publisher — each with defined responsibilities and strict anti-hallucination guardrails.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Key Design Decisions</h4>
-            <ul>
-              <li>Source hierarchy enforcement (Company site → SEC → Regulator → Media)</li>
-              <li>11 defined QA flag types surfacing data quality issues automatically</li>
-              <li>Two research rounds before any field is marked incomplete</li>
-              <li>Every output cell hyperlinked to its primary source</li>
-            </ul>
-          </div>
-          <div class="detail-block">
-            <h4>PM Signal</h4>
-            <p>Decomposed a complex research process into roles, rules, and failure modes — the same thinking required to spec a product feature.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Scope</h4>
-            <p>US & Canada renewable assets: Solar, Wind, BESS, Hybrid, Hydro. Covers operational, under construction, development, planned, and retired assets across SPVs, JVs, and subsidiaries.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Case 2 -->
-    <div class="case-card reveal" onclick="toggleCase('case2')">
-      <div class="case-header">
-        <div class="case-num">02</div>
-        <div class="case-meta">
-          <div class="case-tag">Document Intelligence · Two-Pass Extraction</div>
-          <div class="case-title">M&A Transaction Extraction from Reports & Filings</div>
-          <div class="case-problem">Analysts used manual Ctrl+F keyword search across SEC filings, industry reports, and press releases to flag M&A deals. At 1–2 hours per document, with deals buried in footnotes and exhibits routinely missed, the process couldn't keep up with deal volume.</div>
-          <div class="case-metrics">
-            <div class="metric"><div class="metric-val">80%</div><div class="metric-label">Time Saved</div></div>
-            <div class="metric"><div class="metric-val">15–20m</div><div class="metric-label">Per Report Now</div></div>
-            <div class="metric"><div class="metric-val">Zero</div><div class="metric-label">Missed Footnotes</div></div>
-          </div>
-          <button class="expand-btn" id="btn-case2">Details <span class="expand-arrow">↓</span></button>
-        </div>
-      </div>
-      <div class="case-detail" id="case2">
-        <div class="detail-grid">
-          <div class="detail-block">
-            <h4>What I Built</h4>
-            <p>A structured extraction prompt that processes any document type — SEC/SEDAR filings, trade reports, press releases — and extracts every transaction with full context, sourcing, and analyst-grade commentary via a 6-step chain-of-thought reasoning sequence.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Key Design Decisions</h4>
-            <ul>
-              <li>80+ keyword primary list + second-pass expanded set for financing language missed by Ctrl+F</li>
-              <li>Historical transaction capture (completed, pending, ongoing)</li>
-              <li>Cross-check routine auditing high-yield sections after initial pass</li>
-              <li>Structured narrative output — ready for analyst use, no reformatting</li>
-            </ul>
-          </div>
-          <div class="detail-block">
-            <h4>PM Signal</h4>
-            <p>Two-pass architecture with a cross-check routine shows deliberate design against failure modes. Deep domain knowledge encoded into a reusable system — exactly what a domain PM does when speccing a feature.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Coverage</h4>
-            <p>Acquisitions, mergers, divestitures, JVs, investments, partnerships, LOI/MOU/LOA steps, options, earn-ins, royalties, licenses, tenders, financing agreements, hedge buyouts, and equity contributions.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Case 3 -->
-    <div class="case-card reveal" onclick="toggleCase('case3')">
-      <div class="case-header">
-        <div class="case-num">03</div>
-        <div class="case-meta">
-          <div class="case-tag">News Intelligence · Daily Operations · MVP</div>
-          <div class="case-title">Real-Time M&A News Monitoring Engine</div>
-          <div class="case-problem">A junior analyst spent 2–3 hours every day manually scanning 5 press release platforms for energy sector M&A activity — creating a single point of failure, inconsistent coverage, and a perpetual drain on a skilled team member's time.</div>
-          <div class="case-metrics">
-            <div class="metric"><div class="metric-val">85%</div><div class="metric-label">Time Saved</div></div>
-            <div class="metric"><div class="metric-val">Daily</div><div class="metric-label">Team Dependency</div></div>
-            <div class="metric"><div class="metric-val">5</div><div class="metric-label">Platforms Covered</div></div>
-          </div>
-          <button class="expand-btn" id="btn-case3">Details <span class="expand-arrow">↓</span></button>
-        </div>
-      </div>
-      <div class="case-detail" id="case3">
-        <div class="detail-grid">
-          <div class="detail-block">
-            <h4>What I Built</h4>
-            <p>A real-time transaction intelligence prompt monitoring Business Wire, PR Newswire, GlobeNewswire, and Newswire.ca simultaneously, applying rigorous inclusion/exclusion logic and delivering a structured, deduplicated deal table daily.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Key Design Decisions</h4>
-            <ul>
-              <li>Two-layer signal detection: headline + body text, not headline alone</li>
-              <li>20+ transaction types included; operational noise explicitly excluded</li>
-              <li>Cross-platform, cross-language deduplication</li>
-              <li>Pagination enforcement — no pages skipped</li>
-              <li>Three-section output with full coverage transparency</li>
-            </ul>
-          </div>
-          <div class="detail-block">
-            <h4>PM Signal</h4>
-            <p>Identified a task consuming disproportionate team capacity and replaced it with a system — not just a faster way of doing the same thing. Eliminated a single point of failure the team didn't realize they had.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Impact Beyond Time</h4>
-            <p>Freed a junior analyst from a repetitive daily task entirely, redirecting that capacity toward higher-value analysis. Parameterized date range means one prompt covers daily, weekly, or retroactive research.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Case 4 -->
-    <div class="case-card reveal" onclick="toggleCase('case4')">
-      <div class="case-header">
-        <div class="case-num">04</div>
-        <div class="case-meta">
-          <div class="case-tag">Expert System · Deal Intelligence · GitHub Open Source</div>
-          <div class="case-title">M&A Deal Memo Intelligence System</div>
-          <div class="case-problem">Every significant M&A or asset transaction requires a source-backed deal memo. Analysts wrote these from scratch every time — 2–4 hours per deal — with output quality varying by seniority, facts frequently unsourced, and material documents like merger agreements and investor presentations routinely missed. In M&A intelligence, an unsourced fact isn't a minor gap — it's a credibility problem.</div>
-          <div class="case-metrics">
-            <div class="metric"><div class="metric-val">60%</div><div class="metric-label">Time Saved</div></div>
-            <div class="metric"><div class="metric-val">60–90m</div><div class="metric-label">Per Memo Now</div></div>
-            <div class="metric"><div class="metric-val">GitHub</div><div class="metric-label">Public Repo</div></div>
-          </div>
-          <button class="expand-btn" id="btn-case4">Details <span class="expand-arrow">↓</span></button>
-        </div>
-      </div>
-      <div class="case-detail" id="case4">
-        <div class="detail-grid">
-          <div class="detail-block">
-            <h4>What I Built</h4>
-            <p>A 10-step mandatory research workflow that encodes senior analyst judgment into a reusable LLM system — covering transaction identification, document retrieval, ownership mapping, deal mechanics extraction, advisor identification, post-announcement monitoring, and a complete source register. Operates on a deal headline and produces a fixed 12-section professional memo every time.</p>
-          </div>
-          <div class="detail-block">
-            <h4>Key Design Decisions</h4>
-            <ul>
-              <li>Controlled vocabulary of 12 transaction types for consistent classification</li>
-              <li>Mandatory ±7 day presentation search window around announcement date — catches investor decks manual research misses</li>
-              <li>Document priority hierarchy: press release → exchange filing → SEC → presentations → merger agreement → media</li>
-              <li>15 anti-hallucination hard rules — prohibits "likely," "appears to be," "may have" unless quoted from source</li>
-              <li>Ownership chain mapping: Entity → immediate parent → intermediate parent(s) → ultimate parent, stops explicitly where confirmation ends</li>
-              <li>Legal term simplification — complex clauses quoted then explained in plain business English</li>
-              <li>Full source register on every output: title, type, party, date, URL, access status, source quality</li>
-              <li>Failsafe rule — stops and asks for clarification rather than proceeding with a potentially wrong deal</li>
-            </ul>
-          </div>
-          <div class="detail-block">
-            <h4>What Makes This Different</h4>
-            <p>The previous three workflows automate repetitive high-volume tasks. This one encodes expert judgment. The 10-step sequence, document hierarchy, ownership rules, anti-hallucination guardrails, and failsafe rule come from knowing what experienced M&A analysts check, in what order, and why. Encoding that into a reusable system is a fundamentally different kind of work — it raises the quality floor so a junior analyst using this system produces a more complete, better-sourced memo than a senior analyst working manually.</p>
-          </div>
-          <div class="detail-block">
-            <h4>PM Signal & GitHub</h4>
-            <p>The primary design goal wasn't speed — it was accuracy and consistency. This is published on GitHub with versioning in mind, showing thinking beyond "tool I built" toward "system others can use and improve." Covers global M&A and asset transactions across energy transition sectors: electricity generation, renewables, mining, EV, battery value chain, and related industrial themes.</p>
-            <p style="margin-top:12px;"><a href="https://github.com/Darvin2802/ma-deal-memo-workflow" target="_blank" style="color:var(--accent);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.08em;">→ github.com/Darvin2802/ma-deal-memo-workflow</a></p>
-          </div>
-        </div>
-
-        <!-- Full comprehensive breakdown -->
-        <div style="margin-top:32px;padding-top:32px;border-top:1px solid var(--border);">
-          <h4 style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">The 10-Step Mandatory Workflow</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 1</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Identify & Verify Transaction</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Parse input headline. Verify from primary sources. Classify using controlled 12-type vocabulary. Confirm all parties, dates, stake, and geography before proceeding.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 2</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Full Document Retrieval</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Search 8 source categories: buyer, seller, target, exchange/regulator, advisor, media, archived pages, local-language sources. ±7 day presentation window. Priority hierarchy enforced.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 3</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Transaction Snapshot</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Compact verified summary: deal type, announcement/signing/closing dates, status, buyers, sellers, target, stake, geography, deal value, consideration mix.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 4</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Ownership Structure Mapping</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Trace buyer and seller ownership chains as of announcement date. Entity → immediate parent → intermediate → ultimate parent. Reports only confirmed links. States explicitly where confirmation stops.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 5</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Transaction Details Extraction</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Deal value breakdown: cash, equity, debt assumed, working capital adjustment, earnout, EV, equity value. Plus conditions precedent, regulatory approvals, financing, termination rights, break fees.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 6</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Asset / Company Detail</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Separated into A) confirmed from transaction documents and B) supplemental from other sources. Covers business description, capacity, contracts, financials, historical ownership, strategic rationale.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEP 7</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Advisor Identification</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Financial, legal, fairness opinion, lender/arranger, PR, technical, proxy, accounting advisors. Organized by side. Searches advisor press releases, law firm matter pages, tombstones if not in primary docs.</div>
-            </div>
-            <div style="padding:16px;background:#0f0f0f;border:1px solid var(--border);border-radius:2px;">
-              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:8px;">STEPS 8–10</div>
-              <div style="font-size:13px;color:var(--text);font-weight:500;margin-bottom:6px;">Post-Announcement + Source Register</div>
-              <div style="font-size:12px;color:#777;line-height:1.6;">Monitors closing, amendment, or termination. Consolidated "Not Found" section for full transparency. Complete source register: every source with title, type, party, URL, access status, quality rating.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Impact table -->
-        <div style="margin-top:32px;">
-          <h4 style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Impact</h4>
-          <table style="width:100%;border-collapse:collapse;font-size:13px;">
-            <thead>
-              <tr style="border-bottom:1px solid var(--border);">
-                <th style="text-align:left;padding:10px 0;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">METRIC</th>
-                <th style="text-align:left;padding:10px 16px;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">BEFORE</th>
-                <th style="text-align:left;padding:10px 0;color:var(--accent);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;font-weight:400;">AFTER</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom:1px solid #111;">
-                <td style="padding:10px 0;color:#aaa;">Time per deal memo</td>
-                <td style="padding:10px 16px;color:#666;">2–4 hours</td>
-                <td style="padding:10px 0;color:var(--accent);">60–90 minutes</td>
-              </tr>
-              <tr style="border-bottom:1px solid #111;">
-                <td style="padding:10px 0;color:#aaa;">Output consistency</td>
-                <td style="padding:10px 16px;color:#666;">Varied by analyst seniority</td>
-                <td style="padding:10px 0;color:var(--accent);">Fixed 12-section structure every time</td>
-              </tr>
-              <tr style="border-bottom:1px solid #111;">
-                <td style="padding:10px 0;color:#aaa;">Source discipline</td>
-                <td style="padding:10px 16px;color:#666;">Informal, mixed primary/secondary</td>
-                <td style="padding:10px 0;color:var(--accent);">Mandatory hierarchy, full register</td>
-              </tr>
-              <tr style="border-bottom:1px solid #111;">
-                <td style="padding:10px 0;color:#aaa;">Document coverage</td>
-                <td style="padding:10px 16px;color:#666;">Dependent on analyst knowledge</td>
-                <td style="padding:10px 0;color:var(--accent);">Systematic 8-category search</td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;color:#aaa;">Junior analyst quality</td>
-                <td style="padding:10px 16px;color:#666;">Significantly below senior</td>
-                <td style="padding:10px 0;color:var(--accent);">Standardized to senior standard</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
+<section id="work" style="padding-top:2rem">
+  <div class="ey">Case Studies</div>
+  <h2 class="st fi">Four workflows.<br>One connected pipeline.</h2>
+  <p class="ss fi">Each workflow solves a distinct problem. Together they form an end-to-end M&amp;A intelligence system — from deal detection to full memo output.</p>
+  <div class="pip fi">
+    <div class="pn"><div class="pd" style="background:rgba(167,139,250,.1);color:#a78bfa;border-color:rgba(167,139,250,.3)">03</div><div class="pl">News Monitor</div></div>
+    <div class="pa">→</div>
+    <div class="pn"><div class="pd" style="background:rgba(56,189,248,.1);color:#38bdf8;border-color:rgba(56,189,248,.3)">02</div><div class="pl">Deal Extraction</div></div>
+    <div class="pa">→</div>
+    <div class="pn"><div class="pd" style="background:rgba(0,201,167,.1);color:#00c9a7;border-color:rgba(0,201,167,.3)">01</div><div class="pl">Asset Research</div></div>
+    <div class="pa">→</div>
+    <div class="pn"><div class="pd" style="background:rgba(247,201,72,.1);color:#f7c948;border-color:rgba(247,201,72,.3)">04</div><div class="pl">Deal Memo</div></div>
   </div>
+  <div class="css2 fi"><div class="cc">
+      <div class="ch" onclick="tc('c1')">
+        <div class="cn" style="background:rgba(0,201,167,.1);color:#00c9a7;border-color:rgba(0,201,167,.25)">01</div>
+        <div class="chc">
+          <div class="ctype">Asset Intelligence · Multi-role System</div>
+          <div class="ctit">Renewable Asset Portfolio Research Automation</div>
+          <div class="cprob">Replaced 3–4 hours of fragmented database research with a 7-role system producing consistent, fully-cited results in 30–60 minutes.</div>
+          <div class="cmet"><div><div class="cmn" style="color:#00c9a7">75%</div><div class="cml">Time saved</div></div><div><div class="cmn" style="color:#00c9a7">7</div><div class="cml">Specialist roles</div></div><div><div class="cmn" style="color:#00c9a7">11</div><div class="cml">QA flag types</div></div></div>
+        </div>
+        <div class="ctog" id="tg-c1">▾</div>
+      </div>
+      <div class="cb" id="bd-c1"><div class="ci"><div class="csh">The Problem</div><p class="cbt">Mapping an IPP's renewable asset portfolio is foundational M&amp;A due diligence. The team searched 6+ regulatory databases manually — 3–4 hours per company, no standard for complete. <strong>Citation gaps were silently undermining client trust.</strong> The real problem: nobody had defined "done."</p><div class="csh">Key Product Decisions</div><div class="dg"><div class="di"><div class="dlabel" style="color:#00c9a7">Decision 1</div><div class="dtit">7 specialist roles, not one monolithic prompt</div><div class="dw">When outputs are wrong, roles make it clear which step failed. Auditability over convenience.</div></div><div class="di"><div class="dlabel" style="color:#00c9a7">Decision 2</div><div class="dtit">Mandatory source hierarchy: Company → SEC → Regulator → Media</div><div class="dw">Primary sources carry more evidentiary weight in M&amp;A. Encoding this means every output reflects the same evidence standard.</div></div><div class="di"><div class="dlabel" style="color:#00c9a7">Decision 3</div><div class="dtit">Two research rounds before marking any field incomplete</div><div class="dw">A single pass misses assets in secondary sources. Two rounds reduces false "not found" flags.</div></div><div class="di"><div class="dlabel" style="color:#00c9a7">Decision 4</div><div class="dtit">Every output cell hyperlinked to its primary source</div><div class="dw">Clients don't just want data — they need to verify it. Auditability was the actual product.</div></div></div><div class="csh">Tradeoffs</div><div class="tfs"><div class="tfr"><div class="tfb" style="background:#00c9a7"></div><div class="tft"><strong>Speed vs completeness:</strong> Two research rounds add time. A complete output clients can trust is more valuable than a faster incomplete one.</div></div><div class="tfr"><div class="tfb" style="background:#00c9a7"></div><div class="tft"><strong>US-only vs US and Canada:</strong> Adding Canadian provincial regulators increased complexity — included because the deal universe required it.</div></div></div><div class="csh">Outcome</div><table class="ot"><tr><th>Metric</th><th>Before</th><th>After</th></tr><tr><td>Time per company</td><td>3–4 hours</td><td>30–60 minutes</td></tr><tr><td>Source coverage</td><td>Varied by analyst</td><td>6+ sources mandatory every time</td></tr><tr><td>Citation discipline</td><td>Informal</td><td>Every cell hyperlinked to primary source</td></tr><tr><td>QA visibility</td><td>Manual, ad-hoc</td><td>11 flag types surfaced automatically</td></tr></table><div class="lb"><div class="lbl">PM Lesson</div><div class="lt"><strong>Define "done" before you define "fast."</strong> The team's problem looked like a speed problem. It was a standards problem. Faster inconsistency is still inconsistency.</div></div><div class="nb"><div class="nbl">What I'd build next</div><div class="nbi"><strong>Freshness detection</strong> — staleness flag when portfolio changes</div><div class="nbi"><strong>QA flag auto-resolution</strong> — system resolves own flags before escalating</div><div class="nbi"><strong>Pipeline integration</strong> — auto-feed asset data into Deal Memo</div></div></div></div>
+    </div><div class="cc">
+      <div class="ch" onclick="tc('c2')">
+        <div class="cn" style="background:rgba(56,189,248,.1);color:#38bdf8;border-color:rgba(56,189,248,.25)">02</div>
+        <div class="chc">
+          <div class="ctype">Document Intelligence · Two-Pass Extraction</div>
+          <div class="ctit">M&amp;A Transaction Extraction from Reports &amp; Filings</div>
+          <div class="cprob">Eliminated missed deals buried in footnotes by replacing keyword search with two-pass contextual extraction — solving a tool-method mismatch the team did not know they had.</div>
+          <div class="cmet"><div><div class="cmn" style="color:#38bdf8">80%</div><div class="cml">Time saved</div></div><div><div class="cmn" style="color:#38bdf8">80+</div><div class="cml">Primary keywords</div></div><div><div class="cmn" style="color:#38bdf8">Zero</div><div class="cml">Missed footnotes</div></div></div>
+        </div>
+        <div class="ctog" id="tg-c2">▾</div>
+      </div>
+      <div class="cb" id="bd-c2"><div class="ci"><div class="csh">The Problem</div><p class="cbt">Ctrl+F keyword search was used to extract M&amp;A transactions. At 1–2 hours per document it was slow — but the real problem: <strong>keyword search has a hard architectural limit.</strong> M&amp;A language is deliberately varied. Footnote and financing-section deals were being missed systematically, not randomly.</p><div class="csh">Key Product Decisions</div><div class="dg"><div class="di"><div class="dlabel" style="color:#38bdf8">Decision 1</div><div class="dtit">Two distinct passes, not one comprehensive list</div><div class="dw">Larger primary list increases noise. Different pass types target different language patterns — more precise than more comprehensive.</div></div><div class="di"><div class="dlabel" style="color:#38bdf8">Decision 2</div><div class="dtit">Mandatory cross-check routine after both passes</div><div class="dw">Building explicit doubt about completeness — targeting footnotes regardless of pass results — closes the gap.</div></div><div class="di"><div class="dlabel" style="color:#38bdf8">Decision 3</div><div class="dtit">Historical transactions captured, not just current</div><div class="dw">M&A filings reference completed, pending, and historical transactions. Excluding historical ones loses valuation context.</div></div><div class="di"><div class="dlabel" style="color:#38bdf8">Decision 4</div><div class="dtit">Structured narrative output, not a raw data table</div><div class="dw">Analysts need context, not just fields. Output is client-ready — no reformatting required.</div></div></div><div class="csh">Tradeoffs</div><div class="tfs"><div class="tfr"><div class="tfb" style="background:#38bdf8"></div><div class="tft"><strong>Precision vs recall:</strong> Pass 2 flags shown separately so analysts know which hits require more scrutiny — transparency over automation of judgment.</div></div><div class="tfr"><div class="tfb" style="background:#38bdf8"></div><div class="tft"><strong>Automation vs analyst judgment:</strong> The workflow extracts and contextualises but doesn't make significance judgments. That stays with the human.</div></div></div><div class="csh">Outcome</div><table class="ot"><tr><th>Metric</th><th>Before</th><th>After</th></tr><tr><td>Time per document</td><td>1–2 hours</td><td>15–20 minutes</td></tr><tr><td>Footnote coverage</td><td>Dependent on diligence</td><td>Zero missed footnotes</td></tr><tr><td>Historical transactions</td><td>Often missed</td><td>Captured across all states</td></tr><tr><td>Output format</td><td>Raw notes, reformatting needed</td><td>Structured narrative, client-ready</td></tr></table><div class="lb"><div class="lbl">PM Lesson</div><div class="lt"><strong>When a team has a coverage problem, check the tool before blaming the process.</strong> The gap was that nobody questioned whether keyword search was the right tool for contextual document understanding.</div></div><div class="nb"><div class="nbl">What I'd build next</div><div class="nbi"><strong>Confidence scoring</strong> per extraction for analyst triage</div><div class="nbi"><strong>Auto-trigger from News Monitoring</strong> — detected deal queues filing automatically</div><div class="nbi"><strong>Cross-document deduplication</strong></div></div></div></div>
+    </div><div class="cc">
+      <div class="ch" onclick="tc('c3')">
+        <div class="cn" style="background:rgba(167,139,250,.1);color:#a78bfa;border-color:rgba(167,139,250,.25)">03</div>
+        <div class="chc">
+          <div class="ctype">News Intelligence · Daily Operations · MVP</div>
+          <div class="ctit">Real-Time M&amp;A News Monitoring Engine</div>
+          <div class="cprob">Eliminated a hidden single point of failure — one junior analyst manually scanning 5 platforms every morning — by building a resilient system any team member can run.</div>
+          <div class="cmet"><div><div class="cmn" style="color:#a78bfa">85%</div><div class="cml">Time saved</div></div><div><div class="cmn" style="color:#a78bfa">5</div><div class="cml">Platforms covered</div></div><div><div class="cmn" style="color:#a78bfa">20+</div><div class="cml">Transaction types</div></div></div>
+        </div>
+        <div class="ctog" id="tg-c3">▾</div>
+      </div>
+      <div class="cb" id="bd-c3"><div class="ci"><div class="csh">The Problem</div><p class="cbt">A junior analyst spent 2–3 hours every morning scanning press release platforms. The obvious fix was automation. But the real problem was structural: <strong>the entire team's daily deal intelligence depended on one person.</strong> If they were sick, coverage dropped and nobody knew. This wasn't an inefficient process — it was a fragile one.</p><div class="csh">Key Product Decisions</div><div class="dg"><div class="di"><div class="dlabel" style="color:#a78bfa">Decision 1</div><div class="dtit">Framed as resilience problem, not efficiency problem</div><div class="dw">A faster fragile process is still fragile. The goal was to eliminate the single point of failure entirely.</div></div><div class="di"><div class="dlabel" style="color:#a78bfa">Decision 2</div><div class="dtit">Explicit exclusion list, not just inclusion logic</div><div class="dw">Defining what NOT to include — operational milestones, earnings — was as important as inclusions. Without exclusions, noise creeps in daily.</div></div><div class="di"><div class="dlabel" style="color:#a78bfa">Decision 3</div><div class="dtit">MVP matched existing process exactly</div><div class="dw">Adoption requires trust, trust requires familiarity. v1 matched the analyst's format — team validated against what they knew.</div></div><div class="di"><div class="dlabel" style="color:#a78bfa">Decision 4</div><div class="dtit">Three-section output with full coverage transparency</div><div class="dw">Showing exactly what was scanned made the output verifiable. Teams don't trust a black box.</div></div></div><div class="csh">Tradeoffs</div><div class="tfs"><div class="tfr"><div class="tfb" style="background:#a78bfa"></div><div class="tft"><strong>Fully automated vs analyst-triggered:</strong> v1 kept human-triggered to preserve a quality check during trust-building. Full automation is a v2 decision.</div></div><div class="tfr"><div class="tfb" style="background:#a78bfa"></div><div class="tft"><strong>Speed vs transparency:</strong> Coverage summary takes slightly longer but built trust faster than speed would have.</div></div></div><div class="csh">Outcome</div><table class="ot"><tr><th>Metric</th><th>Before</th><th>After</th></tr><tr><td>Daily time cost</td><td>2–3 hours, one analyst</td><td>Any team member, any time</td></tr><tr><td>Platform coverage</td><td>4 platforms, sequential</td><td>5 platforms, simultaneous</td></tr><tr><td>Coverage consistency</td><td>Varied by analyst and day</td><td>Same logic every single run</td></tr><tr><td>Single point of failure</td><td>One analyst, daily</td><td>Eliminated</td></tr></table><div class="lb"><div class="lbl">PM Lesson</div><div class="lt"><strong>The most dangerous processes are the ones that look like they're working.</strong> Identifying hidden fragility — not just obvious inefficiency — is a PM skill.</div></div><div class="nb"><div class="nbl">What I'd build next</div><div class="nbi"><strong>Auto-trigger to Transaction Extraction</strong> — detected deal queues filing automatically</div><div class="nbi"><strong>Relevance scoring</strong> — triage by deal type, geography, sector</div><div class="nbi"><strong>Real-time alert threshold</strong> for high-value deals</div></div></div></div>
+    </div><div class="cc">
+      <div class="ch" onclick="tc('c4')">
+        <div class="cn" style="background:rgba(247,201,72,.1);color:#f7c948;border-color:rgba(247,201,72,.25)">04</div>
+        <div class="chc">
+          <div class="ctype">Expert System · Deal Intelligence · GitHub Open Source</div>
+          <div class="ctit">M&amp;A Deal Memo Intelligence System</div>
+          <div class="cprob">Turned 2–4 hours of variable-quality analyst work into a 60-minute system encoding senior analyst judgment — so a junior analyst produces a better-sourced memo than a senior analyst working manually.</div>
+          <div class="cmet"><div><div class="cmn" style="color:#f7c948">60%</div><div class="cml">Time saved</div></div><div><div class="cmn" style="color:#f7c948">15</div><div class="cml">Anti-hallucination rules</div></div><div><div class="cmn" style="color:#f7c948">GitHub</div><div class="cml">Open source</div></div></div>
+        </div>
+        <div class="ctog" id="tg-c4">▾</div>
+      </div>
+      <div class="cb" id="bd-c4"><div class="ci"><div class="csh">The Problem</div><p class="cbt">Every M&amp;A transaction required a sourced deal memo. Analysts wrote these from scratch — 2–4 hours per deal — with quality varying by seniority. <strong>In M&amp;A intelligence, an unsourced fact is a credibility problem</strong> that damages client trust. Quality problem disguised as a speed problem.</p><div class="csh">Key Product Decisions</div><div class="dg"><div class="di"><div class="dlabel" style="color:#f7c948">Decision 1</div><div class="dtit">Accuracy as primary constraint, not speed</div><div class="dw">In M&amp;A intelligence, a wrong fact is worse than a slow fact. Speed was a byproduct. Quality floor was the requirement.</div></div><div class="di"><div class="dlabel" style="color:#f7c948">Decision 2</div><div class="dtit">10-step mandatory sequence, not a single prompt</div><div class="dw">Sequence mirrors how a careful analyst works. Separating verification, retrieval, and mapping prevents steps from compressing each other.</div></div><div class="di"><div class="dlabel" style="color:#f7c948">Decision 3</div><div class="dtit">15 hard anti-hallucination rules, not guidelines</div><div class="dw">Rules stop the system and request clarification. "Likely" and "appears to be" prohibited unless quoted from source.</div></div><div class="di"><div class="dlabel" style="color:#f7c948">Decision 4</div><div class="dtit">±7 day presentation search window</div><div class="dw">Investor presentations published within a week of announcements are consistently missed manually. Encoding this as mandatory catches documents that change memo quality.</div></div></div><div class="csh">Tradeoffs</div><div class="tfs"><div class="tfr"><div class="tfb" style="background:#f7c948"></div><div class="tft"><strong>Speed vs accuracy:</strong> 10-step sequence is slower than one prompt. Accepted deliberately — a wrong memo is worse than a delayed one.</div></div><div class="tfr"><div class="tfb" style="background:#f7c948"></div><div class="tft"><strong>Internal tool vs public system:</strong> Publishing on GitHub exposed methodology but created external validation and a forcing function to document properly.</div></div></div><div class="csh">Outcome</div><table class="ot"><tr><th>Metric</th><th>Before</th><th>After</th></tr><tr><td>Time per memo</td><td>2–4 hours</td><td>60–90 minutes</td></tr><tr><td>Output consistency</td><td>Varied by seniority</td><td>Fixed 12-section structure every time</td></tr><tr><td>Source discipline</td><td>Informal, mixed</td><td>Mandatory hierarchy, full source register</td></tr><tr><td>Junior analyst quality</td><td>Significantly below senior</td><td>Standardised to senior standard</td></tr></table><div class="lb"><div class="lbl">PM Lesson</div><div class="lt"><strong>The best AI product decisions encode expert judgment, not just expert speed.</strong> Speed was a byproduct. Encoding judgment is the product.</div></div><div class="nb"><div class="nbl">What I'd build next</div><div class="nbi"><strong>Automated eval layer</strong> — scoring source coverage and hallucination rate</div><div class="nbi"><strong>Feedback loop</strong> — analyst corrections feed back into prompt versioning</div><div class="nbi"><strong>Auto-trigger from Asset Research</strong> — verified portfolio data pulled automatically</div></div><div style="margin-top:1.25rem"><a href="https://github.com/Darvin2802/ma-deal-memo-workflow" target="_blank" class="pl2">View on GitHub ↗</a></div></div></div>
+    </div></div></section>
+<section id="skills" class="fi">
+  <div class="ey">Skills &amp; Tools</div>
+  <h2 class="st">Built from real work,<br>not just a list.</h2>
+  <p class="ss">Skills from 5 years at Enverus — and from actually building production AI systems. The ⚡ tag marks skills surfaced directly from workflow design.</p>
+  <div class="stabs">
+    <button class="stab on" onclick="swt('ai',this)">AI &amp; ML</button>
+    <button class="stab" onclick="swt('product',this)">Product</button>
+    <button class="stab" onclick="swt('data',this)">Data &amp; Analytics</button>
+    <button class="stab" onclick="swt('platforms',this)">Platforms</button>
+    <button class="stab" onclick="swt('pm',this)">PM Craft</button>
+  </div>
+  <div class="sp on" id="tab-ai"><div class="sg"><div class="skc"><div class="ski">🧠</div><div class="skt">LLM Workflow Design</div><div class="skd">Designing end-to-end LLM systems with defined roles, handoffs, and failure modes. 4 production deployments at Enverus.</div><div class="sktags"><span class="sktag">System prompts</span><span class="sktag">Role design</span><span class="sktag">Handoffs</span></div><div class="sfw">Surfaced from production deployment</div></div><div class="skc"><div class="ski">🔧</div><div class="skt">Prompt Engineering</div><div class="skd">Multi-role system prompts, chain-of-thought sequences, instruction hierarchies, and output formatting. Production-tested.</div><div class="sktags"><span class="sktag">CoT reasoning</span><span class="sktag">Instruction hierarchy</span><span class="sktag">Output control</span></div></div><div class="skc"><div class="ski">🛡️</div><div class="skt">Anti-Hallucination Design</div><div class="skd">15-rule guardrail systems, source hierarchies, mandatory citation registers, and failsafe logic that stops rather than guesses.</div><div class="sktags"><span class="sktag">Hard rules</span><span class="sktag">Source hierarchy</span><span class="sktag">Failsafe logic</span></div><div class="sfw">Surfaced from Deal Memo workflow</div></div><div class="skc"><div class="ski">📐</div><div class="skt">RAG Architecture</div><div class="skd">Retrieval-augmented generation pipeline design, chunking strategy, reranking, and context budget allocation.</div><div class="sktags"><span class="sktag">Chunking</span><span class="sktag">Reranking</span><span class="sktag">Context budget</span></div></div><div class="skc"><div class="ski">🤖</div><div class="skt">Agentic AI Systems</div><div class="skd">Multi-role agent design with specialist responsibilities, QA layers, and auditability built into the architecture.</div><div class="sktags"><span class="sktag">Role specialisation</span><span class="sktag">QA layers</span><span class="sktag">Auditability</span></div><div class="sfw">Surfaced from Asset Research workflow</div></div><div class="skc"><div class="ski">📊</div><div class="skt">AI Evaluation & Benchmarking</div><div class="skd">Defining eval frameworks for LLM outputs: answer faithfulness, source coverage scoring, consistency across runs.</div><div class="sktags"><span class="sktag">RAGAS</span><span class="sktag">Faithfulness</span><span class="sktag">Coverage scoring</span></div></div><div class="skc"><div class="ski">🔬</div><div class="skt">Supervised ML Classification</div><div class="skd">Applied Random Forest, SVM, KNN, Perceptron, and Naive Bayes classifiers on real-world datasets. Published research.</div><div class="sktags"><span class="sktag">Random Forest</span><span class="sktag">SVM</span><span class="sktag">Feature importance</span></div></div><div class="skc"><div class="ski">🎯</div><div class="skt">Model Selection & Routing</div><div class="skd">Choosing models based on task requirements, latency constraints, and cost — not defaulting to the largest model available.</div><div class="sktags"><span class="sktag">Cost-quality tradeoff</span><span class="sktag">Latency</span><span class="sktag">Routing logic</span></div></div></div></div>
+  <div class="sp" id="tab-product"><div class="sg"><div class="skc"><div class="ski">📋</div><div class="skt">PRD & Documentation</div><div class="skd">Writing product requirement documents and SOPs that engineering teams can actually use. 37% efficiency improvement documented at Enverus.</div><div class="sktags"><span class="sktag">PRD</span><span class="sktag">SOP</span><span class="sktag">Specs</span></div></div><div class="skc"><div class="ski">🗺️</div><div class="skt">Roadmap Prioritisation</div><div class="skd">Feature prioritisation aligned to business objectives. RICE, ICE, Kano frameworks applied to AI features.</div><div class="sktags"><span class="sktag">RICE</span><span class="sktag">ICE</span><span class="sktag">Kano</span></div></div><div class="skc"><div class="ski">🔍</div><div class="skt">User Research</div><div class="skd">Discovery sprints, user interviews, shadowing sessions — including shadowing analyst workflows to identify root problems before building.</div><div class="sktags"><span class="sktag">Discovery</span><span class="sktag">Shadowing</span><span class="sktag">Interviews</span></div><div class="sfw">Core method in all 4 workflows</div></div><div class="skc"><div class="ski">⚠️</div><div class="skt">Failure Mode Design</div><div class="skd">Identifying and designing against failure modes before they happen — QA flag types, failsafe rules, fallback logic built into systems.</div><div class="sktags"><span class="sktag">Blast radius</span><span class="sktag">Fallback logic</span><span class="sktag">QA flags</span></div><div class="sfw">Surfaced from workflow design</div></div><div class="skc"><div class="ski">📈</div><div class="skt">GTM Strategy</div><div class="skd">Go-to-market planning and phased feature rollout. Applied at Caliber AI — proposed pricing shift from subscription to subscription + token-based.</div><div class="sktags"><span class="sktag">GTM</span><span class="sktag">Pricing</span><span class="sktag">Phased rollout</span></div></div><div class="skc"><div class="ski">🧩</div><div class="skt">Adoption Strategy</div><div class="skd">Getting teams to trust and use new AI systems. MVP scoping to match existing workflows, transparency-first output design.</div><div class="sktags"><span class="sktag">Change management</span><span class="sktag">Trust building</span><span class="sktag">MVP scope</span></div><div class="sfw">Surfaced from News Monitoring workflow</div></div><div class="skc"><div class="ski">🔄</div><div class="skt">A/B Testing</div><div class="skd">Designing and running A/B tests for UX improvements and conversion optimisation at Enverus.</div><div class="sktags"><span class="sktag">Experiment design</span><span class="sktag">Conversion</span><span class="sktag">UX testing</span></div></div><div class="skc"><div class="ski">🏛️</div><div class="skt">Competitive Analysis</div><div class="skd">Structured competitive analysis of market players, positioning, and differentiation. Applied for Caliber AI.</div><div class="sktags"><span class="sktag">Market mapping</span><span class="sktag">Positioning</span><span class="sktag">Differentiation</span></div></div></div></div>
+  <div class="sp" id="tab-data"><div class="sg"><div class="skc"><div class="ski">🗄️</div><div class="skt">SQL</div><div class="skd">Querying and analysing structured data. Used for product analytics, reporting, and data validation at Enverus.</div><div class="sktags"><span class="sktag">Queries</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span></div></div><div class="skc"><div class="ski">📊</div><div class="skt">Power BI & Dashboards</div><div class="skd">Building analytics dashboards for team performance tracking, deal volume metrics, and operational KPIs.</div><div class="sktags"><span class="sktag">Power BI</span><span class="sktag">Dashboards</span><span class="sktag">KPI tracking</span></div></div><div class="skc"><div class="ski">📉</div><div class="skt">Data Storytelling</div><div class="skd">Translating data into decisions for non-technical stakeholders. Making metrics legible, not just visible.</div><div class="sktags"><span class="sktag">Narrative</span><span class="sktag">Visualisation</span><span class="sktag">Executive comms</span></div></div><div class="skc"><div class="ski">🔮</div><div class="skt">Mixpanel & Google Analytics</div><div class="skd">Product analytics, user behaviour tracking, funnel analysis, and feature engagement measurement.</div><div class="sktags"><span class="sktag">Mixpanel</span><span class="sktag">GA4</span><span class="sktag">Funnels</span></div></div></div></div>
+  <div class="sp" id="tab-platforms"><div class="sg"><div class="skc"><div class="ski">⚙️</div><div class="skt">n8n</div><div class="skd">No-code workflow automation for building AI pipelines, integrations, and agent orchestration. Used in production.</div><div class="sktags"><span class="sktag">Workflow automation</span><span class="sktag">Integrations</span><span class="sktag">Agent orchestration</span></div></div><div class="skc"><div class="ski">🚀</div><div class="skt">Lovable</div><div class="skd">No-code AI app builder for rapid prototyping and deploying functional product demos.</div><div class="sktags"><span class="sktag">Prototyping</span><span class="sktag">Deployment</span><span class="sktag">No-code</span></div></div><div class="skc"><div class="ski">🔗</div><div class="skt">LangChain</div><div class="skd">Building LLM-powered pipelines with chains, agents, and memory for complex workflow architectures.</div><div class="sktags"><span class="sktag">Chains</span><span class="sktag">Agents</span><span class="sktag">Memory</span></div></div><div class="skc"><div class="ski">🤖</div><div class="skt">Claude (Anthropic)</div><div class="skd">Primary model for production LLM workflows. System prompt design, constitutional AI principles, and output structuring.</div><div class="sktags"><span class="sktag">System prompts</span><span class="sktag">Claude API</span><span class="sktag">Output control</span></div></div><div class="skc"><div class="ski">🎨</div><div class="skt">Figma & Whimsical</div><div class="skd">Wireframing, prototyping, and product flow design. Created detailed wireframes contributing to UX improvements at Enverus.</div><div class="sktags"><span class="sktag">Wireframing</span><span class="sktag">Prototyping</span><span class="sktag">Flow design</span></div></div><div class="skc"><div class="ski">📁</div><div class="skt">Jira · Confluence · Notion</div><div class="skd">Project management, documentation, and team coordination tools used daily for ops and product work at Enverus.</div><div class="sktags"><span class="sktag">Jira</span><span class="sktag">Confluence</span><span class="sktag">Notion</span></div></div><div class="skc"><div class="ski">⌥</div><div class="skt">GitHub</div><div class="skd">Version control and public portfolio. M&amp;A Deal Memo workflow published as open-source with full documentation.</div><div class="sktags"><span class="sktag">Version control</span><span class="sktag">Open source</span><span class="sktag">Documentation</span></div></div></div></div>
+  <div class="sp" id="tab-pm"><div class="sg"><div class="skc"><div class="ski">🎯</div><div class="skt">Problem Reframing</div><div class="skd">Identifying the root problem behind the stated problem. Speed problem → standards problem. Efficiency problem → resilience problem.</div><div class="sktags"><span class="sktag">Root cause</span><span class="sktag">5 Whys</span><span class="sktag">Problem framing</span></div><div class="sfw">Demonstrated across all 4 workflows</div></div><div class="skc"><div class="ski">⚖️</div><div class="skt">Tradeoff Navigation</div><div class="skd">Making and documenting explicit tradeoffs — speed vs accuracy, automation vs human judgment, flexibility vs consistency.</div><div class="sktags"><span class="sktag">Speed vs quality</span><span class="sktag">Build vs buy</span><span class="sktag">Decision docs</span></div><div class="sfw">Core PM signal in all case studies</div></div><div class="skc"><div class="ski">📏</div><div class="skt">Defining "Done"</div><div class="skd">Establishing explicit completion criteria before building. Prevents scope creep and makes quality measurable.</div><div class="sktags"><span class="sktag">Acceptance criteria</span><span class="sktag">Quality bars</span><span class="sktag">Standards</span></div><div class="sfw">Surfaced from Asset Research workflow</div></div><div class="skc"><div class="ski">🔁</div><div class="skt">MVP Scoping</div><div class="skd">Scoping v1 to build trust before expanding. Matching new systems to existing workflows so teams can validate.</div><div class="sktags"><span class="sktag">MVP design</span><span class="sktag">Adoption</span><span class="sktag">Iteration</span></div><div class="sfw">Surfaced from News Monitoring v1</div></div><div class="skc"><div class="ski">🔭</div><div class="skt">Systems Thinking</div><div class="skd">Designing individual tools as connected systems. 4 workflows that form an end-to-end pipeline, not 4 isolated automations.</div><div class="sktags"><span class="sktag">Pipeline design</span><span class="sktag">Integration</span><span class="sktag">Dependencies</span></div><div class="sfw">Demonstrated across all 4 workflows</div></div><div class="skc"><div class="ski">📣</div><div class="skt">Stakeholder Management</div><div class="skd">Cross-functional coordination with engineering, sales, marketing, and senior leadership. Reporting to Director at Enverus.</div><div class="sktags"><span class="sktag">Cross-functional</span><span class="sktag">Exec comms</span><span class="sktag">Alignment</span></div></div></div></div>
 </section>
-
-<!-- Domain -->
-<section id="domain">
-  <div class="section-label">Domain Expertise</div>
-  <div class="divider"></div>
-  <h2 class="section-title reveal">What I know deeply.</h2>
-  <div class="domain-grid reveal">
-    <div class="domain-card">
-      <div class="domain-icon">⚡</div>
-      <div class="domain-title">Energy Transition M&A</div>
-      <div class="domain-desc">4.8 years tracking renewable energy deals — solar, wind, BESS, hydro — across the US and Canada. Deep familiarity with how IPPs structure acquisitions, JVs, and asset sales.</div>
+<section id="research" class="fi">
+  <div class="ey">Publication</div>
+  <h2 class="st">Peer-reviewed ML<br>research.</h2>
+  <p class="ss">Co-authored and published in a Taylor &amp; Francis journal — before building production AI systems. Shows genuine ML foundations, not just tool familiarity.</p>
+  <div class="pcard">
+    <div class="pm">
+      <div class="pj">📄 Taylor &amp; Francis · Petroleum Science &amp; Technology</div>
+      <div class="ptit">An Approach of Using Machine Learning Classification for Screening of Enhanced Oil Recovery Techniques</div>
+      <div class="pmeta"><strong>Vol. 42, Issue 25</strong> · 2024 · <strong>Cited 6×</strong> · 240+ views · Co-authored with domain experts</div>
+      <div class="csh" style="margin-top:0">Key Findings</div>
+      <div class="pf">
+        <div class="pfr"><div class="pfd"></div><div class="pft">Applied <strong>5 supervised ML classifiers</strong> (Random Forest, SVM, KNN, Perceptron, Naive Bayes) on 358 global EOR projects</div></div>
+        <div class="pfr"><div class="pfd"></div><div class="pft"><strong>Random Forest achieved 91% accuracy</strong> — highest among all methods tested</div></div>
+        <div class="pfr"><div class="pfd"></div><div class="pft">Validated on <strong>5 real-world oilfields</strong> across USA, Oman, India &amp; Indonesia — all predictions matched</div></div>
+        <div class="pfr"><div class="pfd"></div><div class="pft">Identified <strong>viscosity as top predictive feature</strong> at 34.6% importance via feature importance analysis</div></div>
+      </div>
+      <div class="csh">Classifier Performance</div>
+      <div class="clfg" id="clfGrid">
+        <div class="clfr"><div class="clfn">Random Forest</div><div class="clfbw"><div class="clfb" data-w="91" style="background:#7c6fff"></div></div><div class="clfv">91%</div></div>
+        <div class="clfr"><div class="clfn">SVM</div><div class="clfbw"><div class="clfb" data-w="84" style="background:#38bdf8"></div></div><div class="clfv">84%</div></div>
+        <div class="clfr"><div class="clfn">KNN</div><div class="clfbw"><div class="clfb" data-w="79" style="background:#00c9a7"></div></div><div class="clfv">79%</div></div>
+        <div class="clfr"><div class="clfn">Perceptron</div><div class="clfbw"><div class="clfb" data-w="74" style="background:#f7c948"></div></div><div class="clfv">74%</div></div>
+        <div class="clfr"><div class="clfn">Naive Bayes</div><div class="clfbw"><div class="clfb" data-w="68" style="background:#f87171"></div></div><div class="clfv">68%</div></div>
+      </div>
+      <div class="pstats">
+        <div><div class="psn">6×</div><div class="psl">Citations</div></div>
+        <div><div class="psn">240+</div><div class="psl">Views</div></div>
+        <div><div class="psn">91%</div><div class="psl">Best accuracy</div></div>
+        <div><div class="psn">358</div><div class="psl">EOR projects</div></div>
+      </div>
     </div>
-    <div class="domain-card">
-      <div class="domain-icon">🤖</div>
-      <div class="domain-title">AI Workflow Design</div>
-      <div class="domain-desc">Built production prompt systems with multi-agent architectures, anti-hallucination guardrails, and QA routines. Understand where LLMs fail and how to design around it.</div>
-    </div>
-    <div class="domain-card">
-      <div class="domain-icon">📊</div>
-      <div class="domain-title">Regulatory & Financial Data</div>
-      <div class="domain-desc">Fluent in SEC/SEDAR filings, EIA databases, FERC dockets, ISO/RTO queues, and provincial Canadian regulators. Know where the data lives and how to extract it.</div>
+    <div class="psb">
+      <div class="psig"><div class="psigl">PM Signal</div><div class="psigt">This paper demonstrates <strong>genuine ML foundations</strong> — not surface-level tool familiarity. Applying 5 classifiers and publishing peer-reviewed findings is the same rigour required when evaluating AI features in production.</div></div>
+      <div class="psig" style="background:rgba(0,201,167,.06);border-color:rgba(0,201,167,.2)"><div class="psigl" style="color:var(--teal)">Why it matters</div><div class="psigt">Most PM candidates understand AI conceptually. <strong>Having published applied ML research</strong> in a real domain — energy — is a rare and verifiable signal of technical depth.</div></div>
+      <a href="https://www.tandfonline.com/doi/full/10.1080/10916466.2024.2360001" target="_blank" class="pl2">Read the paper ↗</a>
     </div>
   </div>
 </section>
-
-<!-- Contact -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="contact-left reveal">
-      <h2>Let's talk<br>about building<br><span style="color:var(--accent)">products.</span></h2>
-      <p>I'm actively exploring PM roles — particularly in energy, data, or AI product companies. If something here resonates, I'd love to connect.</p>
+<section id="domain" class="fi">
+  <div class="ey">Domain</div>
+  <h2 class="st">What I know deeply.</h2>
+  <p class="ss">5 years of genuine depth in energy, data, and AI systems — not surface-level familiarity.</p>
+  <div class="dg3">
+    <div class="dcard"><div class="dicon">⚡</div><div class="dtitle">Energy Transition M&amp;A</div><div class="ddesc">4.8 years tracking renewable deals — solar, wind, BESS, hydro — across the US and Canada. Deep familiarity with IPP structures, acquisitions, JVs, and asset sales. Fluent in SEC/SEDAR filings, FERC dockets, EIA databases, and ISO/RTO queues.</div></div>
+    <div class="dcard"><div class="dicon">🤖</div><div class="dtitle">AI Workflow Design</div><div class="ddesc">Built production LLM systems with multi-role architectures, anti-hallucination guardrails, QA routines, and source hierarchies. Understand where LLMs fail and how to design around it — in systems used daily by real teams.</div></div>
+    <div class="dcard"><div class="dicon">📊</div><div class="dtitle">B2B Product Operations</div><div class="ddesc">PRDs, SOPs, roadmaps, user research, A/B testing, cross-functional coordination at an enterprise SaaS company with $550M+ ARR. Understand how PM decisions translate to team outcomes and client value.</div></div>
+  </div>
+</section>
+<section id="contact" class="fi" style="padding-bottom:8rem">
+  <div class="ctwrap">
+    <div>
+      <div class="ey" style="margin-bottom:1rem">Contact</div>
+      <h2 class="cttit">Let's talk about<br>building <em>products.</em></h2>
+      <p class="ctdesc">Actively exploring PM and AI PM roles — particularly in B2B SaaS, energy data, or AI-native companies. If something here resonates, I'd love to connect.</p>
+      <div class="ac">
+        <span class="chip" style="border-color:rgba(0,201,167,.3);color:var(--teal)">Open to work</span>
+        <span class="chip">Bangalore · Remote</span>
+        <span class="chip">PM · AI PM · Product Ops</span>
+      </div>
     </div>
-    <div class="contact-links reveal">
-      <a href="mailto:pdarvin381@gmail.com" class="contact-link">
-        <span class="contact-link-icon">EMAIL</span>
-        pdarvin381@gmail.com
-      </a>
-      <a href="https://www.linkedin.com/in/darvinpatel99" target="_blank" class="contact-link">
-        <span class="contact-link-icon">LI</span>
-        linkedin.com/in/darvinpatel99
-      </a>
+    <div class="ctls">
+      <a href="mailto:pdarvin381@gmail.com" class="ctl"><div class="ctli" style="background:rgba(124,111,255,.1)">✉</div><div class="ctlt"><div class="ctll">Email</div><div class="ctlv">pdarvin381@gmail.com</div></div><div class="ctla">→</div></a>
+      <a href="https://linkedin.com/in/darvinpatel99" target="_blank" class="ctl"><div class="ctli" style="background:rgba(56,189,248,.1)">in</div><div class="ctlt"><div class="ctll">LinkedIn</div><div class="ctlv">linkedin.com/in/darvinpatel99</div></div><div class="ctla">→</div></a>
+      <a href="https://github.com/Darvin2802" target="_blank" class="ctl"><div class="ctli" style="background:rgba(247,201,72,.1)">⌥</div><div class="ctlt"><div class="ctll">GitHub</div><div class="ctlv">github.com/Darvin2802</div></div><div class="ctla">→</div></a>
     </div>
   </div>
 </section>
-
 <footer>
-  <p>© 2025 Darvin Patel</p>
-  <p>M&A Research Lead → Product Manager</p>
+  <span style="font-family:'DM Serif Display',serif;font-size:14px;color:var(--text2)">Darvin Patel</span>
+  <span style="margin:0 12px;color:var(--border2)">·</span>AI Product Builder · B2B SaaS · Energy Transition<span style="margin:0 12px;color:var(--border2)">·</span>darvin2802.github.io
 </footer>
-
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Case toggle
-  function toggleCase(id) {
-    const detail = document.getElementById(id);
-    const btn = document.getElementById('btn-' + id);
-    const isOpen = detail.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.case-detail').forEach(d => d.classList.remove('open'));
-    document.querySelectorAll('.expand-btn').forEach(b => b.classList.remove('open'));
-    // Open clicked if it was closed
-    if (!isOpen) {
-      detail.classList.add('open');
-      btn.classList.add('open');
-    }
-  }
-</script>
-</body>
-</html>
+const tog=document.getElementById("themeToggle"),html=document.documentElement;
+html.setAttribute("data-theme",localStorage.getItem("theme")||"dark");
+tog.addEventListener("click",()=>{const c=html.getAttribute("data-theme"),n=c==="dark"?"light":"dark";html.setAttribute("data-theme",n);localStorage.setItem("theme",n)});
+function tc(id){const b=document.getElementById("bd-"+id),t=document.getElementById("tg-"+id),o=b.classList.contains("open");b.classList.toggle("open",!o);t.classList.toggle("open",!o)}
+function swt(id,el){document.querySelectorAll(".stab").forEach(t=>t.classList.remove("on"));document.querySelectorAll(".sp").forEach(p=>p.classList.remove("on"));el.classList.add("on");document.getElementById("tab-"+id).classList.add("on")}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("v");obs.unobserve(x.target)}})},{threshold:.08});
+document.querySelectorAll(".fi").forEach(el=>obs.observe(el));
+const bo=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll(".clfb").forEach(b=>{const w=b.getAttribute("data-w");setTimeout(()=>{b.style.width=w+"%"},200)});bo.unobserve(x.target)}})},{threshold:.3});
+const cg=document.getElementById("clfGrid");if(cg)bo.observe(cg);
+document.addEventListener("click",e=>{const n=document.getElementById("navLinks");if(!e.target.closest("nav")&&n.classList.contains("open"))n.classList.remove("open")});
+</script></body></html>
